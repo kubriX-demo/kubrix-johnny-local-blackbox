@@ -13,6 +13,6 @@ spec:
     staticConfig:
       labels:
         service: backstage
-        healthcheck: kubrix
+        platform: kubrix
       static:
         - https://backstage.127-0-0-1.nip.io/.backstage/health/v1/liveness
