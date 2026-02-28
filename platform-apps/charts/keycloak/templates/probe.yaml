@@ -2,7 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
   name: keycloak-probe
-  namespace: keycloak
 spec:
   interval: 60s
   module: http_2xx
