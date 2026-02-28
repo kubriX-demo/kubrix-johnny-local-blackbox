@@ -12,5 +12,6 @@ spec:
     staticConfig:
       labels:
         healthcheck: ping
+        service: argocd
       static:
         - https://{{ index .Values "argo-cd" "global" "domain" }}/healthz
