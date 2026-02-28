@@ -7,7 +7,7 @@ spec:
   module: https_2xx_insecure
   prober:
     path: /probe
-    url: http://sx-prometheus-blackbox-exporter.prometheus-blackbox-exporter.svc:9115
+    url: sx-prometheus-blackbox-exporter.prometheus-blackbox-exporter.svc:9115
   targets:
     staticConfig:
       labels:
