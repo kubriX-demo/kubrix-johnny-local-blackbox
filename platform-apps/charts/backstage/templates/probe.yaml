@@ -2,7 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
   name: backstage-probe
-  namespace: backstage
 spec:
   interval: 60s
   module: https_2xx_insecure
