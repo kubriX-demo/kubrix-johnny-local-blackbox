@@ -1,0 +1,114 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: docs-template
+  title: Documentation Template
+  description: Create a new standalone documentation project
+  tags:
+    - recommended
+    - techdocs
+    - mkdocs
+spec:
+  owner: group:kubrix
+  type: documentation
+
+  parameters:
+    - title: Provide documentation details
+      required:
+        - name
+        - description
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name of the documentation project
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: A description for the documentation project
+          maxLength: 200
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the documentation project
+          ui:field: MyGroupsPicker
+          ui:options: {}
+        teamOrg:
+          title: Team Organization
+          type: string
+          description: Which organization should the team belong to
+          ui:help: 'Lowercase letters, numbers, hyphens. if left empty, it will default to the organization of the repoUrl'
+          ui:placeholder: 'kubrix-demo'
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+            allowedOwners:
+              - will-be-autocomplete-by-template
+            requestUserCredentials:
+              secretsKey: USER_OAUTH_TOKEN
+              additionalScopes:
+                github: 
+                  - workflow
+                  - user
+            allowedRepos:
+              - will-be-autocomplete-by-template
+  # This template is meant to be used on top of an existing template.
+  # By adding the following and fetching from an absolute URL you can
+  # add in the docs template
+  steps:
+    - id: catalogFetch
+      name: Fetch component details
+      action: catalog:fetch
+      input:
+        entityRef: ${{ parameters.owner }}
+
+    - id: fetch
+      name: Template Docs Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          description: ${{ parameters.description }}
+          repoUrlRepo: ${{ steps['catalogFetch'].output.entity.metadata.name }}-${{ parameters.name }}
+          repoUrlowner: ${{ environment.parameters.defaultOrgName }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        description: This is ${{ parameters.name }}
+        repoUrl: github.com?repo=${{ steps['catalogFetch'].output.entity.metadata.name }}-${{ parameters.name }}&owner=${{ parameters.teamOrg or environment.parameters.defaultOrgName }}
+        token: ${{ secrets.USER_OAUTH_TOKEN }}
+        gitAuthorName: ${{ user.entity.metadata.name }}
+        gitAuthorEmail: ${{ user.entity.spec.profile.email }}
+        repoVisibility: public
+        deleteBranchOnMerge: true
+        protectDefaultBranch: false
+        defaultBranch: main
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

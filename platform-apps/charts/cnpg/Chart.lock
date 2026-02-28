@@ -1,0 +1,9 @@
+dependencies:
+- name: cloudnative-pg
+  repository: https://cloudnative-pg.github.io/charts
+  version: 0.27.1
+- name: pgadmin4
+  repository: https://helm.runix.net
+  version: 1.59.0
+digest: sha256:cf49be90dc4543a9ae86e5288b1af60c17090d1cb201a63178391f2f67dd2acf
+generated: "2026-02-13T17:25:10.494013604Z"

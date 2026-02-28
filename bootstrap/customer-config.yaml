@@ -1,0 +1,13 @@
+clusterType: kind
+cloudProvider: on-prem
+dnsProvider: none
+certManagerDnsProvider: none
+tShirtSize: small
+securityStrict: false
+haEnabled: false
+domain: 127-0-0-1.nip.io
+gitRepo: https://github.com/kubriX-demo/kubrix-johnny-local-blackbox
+gitRepoOrg: kubriX-demo
+gitRepoName: kubrix-johnny-local-blackbox
+gitUser: jkleinlercher
+metalLbIp:  
