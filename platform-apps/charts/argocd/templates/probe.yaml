@@ -11,7 +11,7 @@ spec:
   targets:
     staticConfig:
       labels:
-        healthcheck: ping
+        healthcheck: kubrix
         service: argocd
       static:
         - https://{{ index .Values "argo-cd" "global" "domain" }}/healthz
