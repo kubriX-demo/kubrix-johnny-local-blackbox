@@ -1,3 +1,6 @@
+kubrixstatus:
+  enabled: true
+
 kubernetesModernDashboards:
   enabled: true
 
