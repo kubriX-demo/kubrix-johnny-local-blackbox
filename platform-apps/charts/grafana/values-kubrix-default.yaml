@@ -89,5 +89,8 @@ grafana:
   initChownData:
     enabled: false
 
+  serviceMonitor:
+    enabled: true
+
 cluster:
   enabled: false
