@@ -36,13 +36,13 @@
             {
               "options": {
                 "0": {
-                  "text": "Healthy"
+                  "text": "OK"
                 },
                 "1": {
                   "text": "Warning"
                 },
                 "2": {
-                  "text": "Unhealthy"
+                  "text": "Not OK"
                 }
               },
               "type": "value"
