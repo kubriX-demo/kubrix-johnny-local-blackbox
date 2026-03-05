@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: argocd-kubrix-service-status
+  namespace: mimir
+  labels:
+    platform: kubrix
+    service: argocd
+spec:
+  groups:
+  - name: kubrix.service.status
+    interval: 30s
+    rules:
+    # --- Argo CD ---
+    - record: kubrix_service_status
+      labels:
+        platform: kubrix
+        service: argocd
+      expr: |
+        max(
+          2 * (min(probe_success{platform="kubrix",service="argocd"}) == bool 0),
+          1 * (
+            kube_deployment_status_replicas_available{namespace="argocd",deployment="argocd-server"}
+            < bool
+            kube_deployment_spec_replicas{namespace="argocd",deployment="argocd-server"}
+          )
+        )
