@@ -36,13 +36,13 @@
             {
               "options": {
                 "0": {
-                  "text": "OK"
+                  "text": "Healthy"
                 },
                 "1": {
                   "text": "Warning"
                 },
                 "2": {
-                  "text": "Not OK"
+                  "text": "Unhealthy"
                 }
               },
               "type": "value"
@@ -99,7 +99,7 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "max by (service) ( 2 * (min by (service) (probe_success{cluster=\"kubrix\", platform=\"kubrix\"}) == bool 0) )",
+          "expr": "kubrix_service_status{platform="kubrix"}",
           "legendFormat": "{{service}}",
           "refId": "A"
         }
@@ -193,7 +193,7 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "2 * (min by (service) (probe_success{cluster=\"kubrix\", platform=\"kubrix\"}) == bool 0)",
+          "expr": "max_over_time(kubrix_service_status{platform="kubrix"}[5m])",
           "legendFormat": "{{service}}",
           "refId": "A"
         }
