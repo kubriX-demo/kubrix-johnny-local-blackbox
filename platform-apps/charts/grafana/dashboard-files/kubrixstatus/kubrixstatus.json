@@ -99,7 +99,7 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "kubrix_service_status{platform="kubrix"}",
+          "expr": "kubrix_service_status{platform=\"kubrix\"}",
           "legendFormat": "{{service}}",
           "refId": "A"
         }
@@ -193,7 +193,7 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "max_over_time(kubrix_service_status{platform="kubrix"}[5m])",
+          "expr": "max_over_time(kubrix_service_status{platform=\"kubrix\"}[5m])",
           "legendFormat": "{{service}}",
           "refId": "A"
         }
