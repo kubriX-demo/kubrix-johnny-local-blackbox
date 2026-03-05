@@ -193,7 +193,7 @@
             "type": "prometheus",
             "uid": "mimir"
           },
-          "expr": "last_over_time((2 * (min by (service) (probe_success{cluster=\"kubrix\", platform=\"kubrix\"}) == bool 0))[5m])",
+          "expr": "2 * (min by (service) (probe_success{cluster=\"kubrix\", platform=\"kubrix\"}) == bool 0)",
           "legendFormat": "{{service}}",
           "refId": "A"
         }
