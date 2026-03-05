@@ -22,12 +22,7 @@ spec:
         )
         +
         (
-          scalar(
-            max(
-              kube_deployment_status_replicas_available{namespace="argocd",deployment="sx-argocd-server"}
-              < bool
-              kube_deployment_spec_replicas{namespace="argocd",deployment="sx-argocd-server"}
-            )
-          )
-          * (1 - (scalar(min(probe_success{platform="kubrix",service="argocd"})) == bool 0))
+          scalar(max(GRAFANA_ALERTS{namespace="argocd"} == bool 1))
+          *
+          (1 - (scalar(min(probe_success{platform="kubrix",service="argocd"})) == bool 0))
         )
