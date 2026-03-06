@@ -32,9 +32,6 @@ applications:
       argocd.argoproj.io/sync-wave: "-9"
     syncOptions:
       - ServerSideApply=true
-    managedNamespaceMetadata:
-      labels:
-        platform: kubrix
 
   - name: external-secrets
     annotations:
